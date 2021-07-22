@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchUser } from "../actions";
 import Header from "./Header";
-import Profile from "./Profile";
+import UserProfile from "./UserProfile";
+import Home from "./Home";
+import Results from "./Results";
 
 function App({ fetchUser }) {
   useEffect(() => {
@@ -12,12 +14,11 @@ function App({ fetchUser }) {
   return (
     <Router>
       <Header />
-      <Route exact path="/">
-        Home
-      </Route>
-      <Route path="/profile/:id">
-        <Profile />
-      </Route>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/user-profile/:id" component={UserProfile} />
+        <Route path="/results" component={Results} />
+      </Switch>
     </Router>
   );
 }

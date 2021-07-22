@@ -1,47 +1,64 @@
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import { searchPlayers } from "../actions";
 
-const Header = ({ auth }) => {
-  const renderButtons = () => {
-    if (auth === null) {
-      return (
-        <div className="ui item">
-          <div className="ui loader" />
+import Search from "./Search";
+
+const Header = ({ auth, searchPlayers }) => {
+  let location = useLocation();
+
+  const renderAuthButton = () => {
+    return auth ? (
+      <a href="/api/logout" className="ui item">
+        <div className="ui orange inverted button">Log Out</div>
+      </a>
+    ) : (
+      <a href="/auth/google" className="ui item">
+        <div className="ui orange inverted button">
+          <i className="google icon" />
+          Sign in With Google
         </div>
-      );
-    } else if (!auth) {
-      return (
-        <a href="/auth/google" className="ui red item">
-          Log In with Google
-        </a>
-      );
-    } else {
-      return (
-        <>
-          <Link className="ui item" to={`/profile/${auth.googleId}}`}>
-            Profile
-          </Link>
-          <a href="/api/logout" className="ui item">
-            Logout
-          </a>
-        </>
-      );
-    }
+      </a>
+    );
   };
+
+  const renderUserButtons = () => {
+    return (
+      <>
+        <Link
+          className={`item ${
+            location.pathname === `/user-profile/${auth.googleId}}` ? "active" : null
+          } orange`}
+          to={`/user-profile/${auth.googleId}}`}
+        >
+          Profile
+        </Link>
+      </>
+    );
+  };
+
+  const onSearch = (text) => {
+    searchPlayers(text);
+  };
+
   return (
-    <div className="ui inverted menu">
+    <div className="ui stackable fluid inverted menu">
       <div className="ui container">
-        <Link to="/" className="item orange">
+        <Link
+          to="/"
+          className={`item ${
+            location.pathname === "/" ? "active" : null
+          } orange`}
+        >
           Home
         </Link>
+        {auth ? renderUserButtons() : null}
         <div className="right menu">
-          <div className="item orange">
-            <div className="ui icon input">
-              <input type="text" placeholder="Search..." />
-              <i className="search link icon"></i>
-            </div>
+          <div className="item">
+            <Search onSearch={onSearch} />
           </div>
-          {renderButtons()}
+          {renderAuthButton()}
         </div>
       </div>
     </div>
@@ -54,4 +71,4 @@ const mapStateToProps = ({ auth }) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { searchPlayers })(Header);
