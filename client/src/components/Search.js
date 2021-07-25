@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 
-const Search = ({ onSearch }) => {
-  let history = useHistory();
+const Search = ({ onSearch, redirect }) => {
   const [text, setText] = useState("");
+  let history = useHistory();
 
   const onSubmit = (e) => {
     e.preventDefault();
     onSearch(text);
     setText("");
-    history.push("/results");
+    history.push(redirect);
   };
 
   return (

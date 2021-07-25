@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
-import { searchPlayers } from "../actions";
+import { fetchPlayers } from "../actions";
 
 import Search from "./Search";
 
-const Header = ({ auth, searchPlayers }) => {
+const Header = ({ auth, fetchPlayers }) => {
   let location = useLocation();
 
   const renderAuthButton = () => {
@@ -39,7 +39,7 @@ const Header = ({ auth, searchPlayers }) => {
   };
 
   const onSearch = (text) => {
-    searchPlayers(text);
+    fetchPlayers(text);
   };
 
   return (
@@ -56,7 +56,7 @@ const Header = ({ auth, searchPlayers }) => {
         {auth ? renderUserButtons() : null}
         <div className="right menu">
           <div className="item">
-            <Search onSearch={onSearch} />
+            <Search onSearch={onSearch} redirect="/results" />
           </div>
           {renderAuthButton()}
         </div>
@@ -71,4 +71,4 @@ const mapStateToProps = ({ auth }) => {
   };
 };
 
-export default connect(mapStateToProps, { searchPlayers })(Header);
+export default connect(mapStateToProps, { fetchPlayers })(Header);

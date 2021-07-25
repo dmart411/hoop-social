@@ -1,5 +1,10 @@
 import { combineReducers } from "redux";
 import authReducer from "./authReducer";
-import searchReducer from "./searchReducer";
+import playerReducer from "./playerReducer";
+import statReducer from "./statReducer";
 
-export default combineReducers({ auth: authReducer, search: searchReducer });
+export default combineReducers({
+  auth: authReducer,
+  players: playerReducer,
+  stats: statReducer
+});

@@ -1,35 +1,34 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { searchPlayers, clearSearch } from "../actions";
+import { Link } from "react-router-dom";
+import { fetchPlayers } from "../actions";
 
-const Results = ({ results, searchPlayers, clearSearch }) => {
+const Results = ({ players, fetchPlayers }) => {
   useEffect(() => {
-    if (!results) {
-      searchPlayers();
+    if (!players) {
+      fetchPlayers();
     }
-    return () => {
-      clearSearch();
-    };
-  }, []);
+  });
 
   return (
-    <div
-      className="ui container"
-      style={{ alignItems: "center", justifyContent: "center" }}
-    >
+    <div className="ui container">
       <h3>Results</h3>
-      <div className="ui middle aligned celled list" style={{ width: "25%" }}>
-        {results
-          ? results.map((result) => {
+      <div className="ui middle aligned celled list" style={{ width: "50%" }}>
+        {players
+          ? players.map((player) => {
               return (
-                <div className="item" key={result.id}>
+                <Link
+                  to={`/player-profile/${player.id}`}
+                  className="item"
+                  key={player.id}
+                >
                   <div className="right floated content">
-                    {result.position[0]}
+                    {player.position[0]}
                   </div>
                   <div className="content">
-                    {result.first_name} {result.last_name}
+                    {player.first_name} {player.last_name}
                   </div>
-                </div>
+                </Link>
               );
             })
           : null}
@@ -40,10 +39,8 @@ const Results = ({ results, searchPlayers, clearSearch }) => {
 
 const mapStateToProps = (state) => {
   return {
-    results: state.search.results,
+    players: state.players,
   };
 };
 
-export default connect(mapStateToProps, { searchPlayers, clearSearch })(
-  Results
-);
+export default connect(mapStateToProps, { fetchPlayers })(Results);
