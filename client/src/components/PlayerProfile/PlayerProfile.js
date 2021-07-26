@@ -25,8 +25,15 @@ const PlayerProfile = ({
     return (
       <div className="ui container">
         <div>{`Team: ${player.team.full_name}`}</div>
-        <div>{`Height: ${player.height_feet}' ${player.height_inches}`}</div>
-        <div>{`Weight: ${player.weight_pounds} lbs`}</div>
+        <div>{player.position ? `Position: ${player.position}` : null}</div>
+        <div>
+          {player.height_feet
+            ? `Height: ${player.height_feet}' ${player.height_inches}`
+            : null}
+        </div>
+        <div>
+          {player.weight_pounds ? `Weight: ${player.weight_pounds} lbs` : null}
+        </div>
       </div>
     );
   };
