@@ -1,12 +1,14 @@
 import axios from "axios";
 import balldontlie from "../apis/balldontlie";
 import requests from "../apis/requests";
-import { 
-  FETCH_PLAYERS, 
-  FETCH_USER, 
-  FETCH_PLAYER, 
-  FETCH_STATS, 
-  FETCH_SEASON_AVERAGES } from "./types";
+import {
+  FETCH_PLAYERS,
+  FETCH_USER,
+  FETCH_PLAYER,
+  FETCH_STATS,
+  FETCH_SEASON_AVERAGES,
+  FETCH_TEAMS,
+} from "./types";
 
 export const fetchUser = () => async (dispatch) => {
   const res = await axios.get("/api/current_user");
@@ -16,17 +18,19 @@ export const fetchUser = () => async (dispatch) => {
   });
 };
 
-export const fetchPlayers = (text="") => async (dispatch) => {
-  const res = await balldontlie.get(requests.getPlayers, {
-    params: {
-      search: text,
-    },
-  });
-  dispatch({
-    type: FETCH_PLAYERS,
-    payload: res.data.data,
-  });
-};
+export const fetchPlayers =
+  (text = "") =>
+  async (dispatch) => {
+    const res = await balldontlie.get(requests.getPlayers, {
+      params: {
+        search: text,
+      },
+    });
+    dispatch({
+      type: FETCH_PLAYERS,
+      payload: res.data.data,
+    });
+  };
 
 export const fetchPlayer = (id) => async (dispatch) => {
   const res = await balldontlie.get(`${requests.getPlayers}/${id}`);
@@ -36,27 +40,40 @@ export const fetchPlayer = (id) => async (dispatch) => {
   });
 };
 
-export const fetchStats = (id) => async (dispatch) => {
-  const res = await balldontlie.get(requests.getStats, {
-    params: {
-      player_ids: [id]
-    }
-  });
-  dispatch({
-    type: FETCH_STATS,
-    payload: res.data.data
-  })
-};
+export const fetchStats =
+  (id, season, postseason = false, page = 0) =>
+  async (dispatch) => {
+    const res = await balldontlie.get(requests.getStats, {
+      params: {
+        player_ids: [id],
+        seasons: [season],
+        page,
+        postseason: postseason,
+      },
+    });
+    dispatch({
+      type: FETCH_STATS,
+      payload: res.data.data,
+    });
+  };
 
 export const fetchSeasonAverages = (id, season) => async (dispatch) => {
   const res = await balldontlie.get(requests.getSeasonAverages, {
     params: {
       player_ids: [id],
-      season
-    }
-  })
+      season,
+    },
+  });
   dispatch({
     type: FETCH_SEASON_AVERAGES,
-    payload: res.data.data
-  })
+    payload: res.data.data,
+  });
+};
+
+export const fetchTeams = () => async (dispatch) => {
+  const res = await balldontlie.get(requests.getTeams);
+  dispatch({
+    type: FETCH_TEAMS,
+    payload: res.data.data,
+  });
 };

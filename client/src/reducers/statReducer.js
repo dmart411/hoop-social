@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { FETCH_STATS, FETCH_SEASON_AVERAGES } from "../actions/types";
 
 const statReducer = (
@@ -12,13 +11,7 @@ const statReducer = (
     case FETCH_STATS:
       return { ...state, gameStats: action.payload };
     case FETCH_SEASON_AVERAGES:
-      return {
-        ...state,
-        seasonAverages: _.uniqWith(
-          [...state.seasonAverages, ...action.payload],
-          _.isEqual
-        ),
-      };
+      return { ...state, seasonAverages: action.payload};
     default:
       return state;
   }

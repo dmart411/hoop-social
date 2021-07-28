@@ -3,3 +3,4 @@ export const FETCH_PLAYERS = "FETCH_PLAYERS";
 export const FETCH_PLAYER = "FETCH_PLAYER";
 export const FETCH_STATS = "FETCH_STATS";
 export const FETCH_SEASON_AVERAGES = "FETCH_SEASON_AVERAGES";
+export const FETCH_TEAMS = "FETCH_TEAMS";

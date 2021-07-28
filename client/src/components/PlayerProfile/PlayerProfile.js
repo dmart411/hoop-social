@@ -1,23 +1,15 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchPlayer, fetchSeasonAverages, fetchStats } from "../../actions";
+import { fetchPlayer } from "../../actions";
 import SeasonAverages from "./SeasonAverages";
+import GameAverages from "./GameStats";
 
-const PlayerProfile = ({
-  match,
-  fetchPlayer,
-  fetchStats,
-  fetchSeasonAverages,
-  player,
-  stats,
-}) => {
+const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
   useEffect(() => {
     const id = match.params.id;
     if (!player) {
       fetchPlayer(id);
     }
-    fetchStats(id);
-    fetchSeasonAverages(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -46,9 +38,9 @@ const PlayerProfile = ({
 
       <div>{player ? renderProfile() : null}</div>
       <div className="ui divider"></div>
-      <div>
-        <SeasonAverages season={2020} id={match.params.id} />
-      </div>
+      <SeasonAverages id={match.params.id} />
+      <div className="ui divider"></div>
+      <GameAverages id={match.params.id} />
     </div>
   );
 };
@@ -66,6 +58,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(mapStateToProps, {
   fetchPlayer,
-  fetchSeasonAverages,
-  fetchStats,
 })(PlayerProfile);

@@ -7,10 +7,9 @@ const SeasonAverages = ({ id, fetchSeasonAverages, seasonAverages }) => {
   const [season, setSeason] = useState(2020);
 
   useEffect(() => {
-    if (!seasonAverages) {
-      fetchSeasonAverages(id, season);
-    }
-  });
+    fetchSeasonAverages(id, season);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const options = [];
   const baseSeason = 2020;
@@ -99,24 +98,19 @@ const SeasonAverages = ({ id, fetchSeasonAverages, seasonAverages }) => {
         </div>
       </>
     ) : (
-      <div>No stats for selected season</div>
+      <div className="ui orange floating message">No stats for selected</div>
     );
   };
 
   return seasonAverages ? (
-    <div className="ui container">
-      <div className="ui container grid">
-        <div className="row">
-          <div className="ui large header" style={{ marginRight: "20px" }}>
-            Season Averages
-          </div>
-          <Selector
-            placeholder="Season"
-            options={options}
-            onChange={onSeasonChange}
-          />
-        </div>
+    <div>
+      <div className="ui large header" style={{ marginRight: "20px" }}>
+        Season Averages
       </div>
+      <div className="ui form">
+        <Selector label="Season" options={options} onChange={onSeasonChange} />
+      </div>
+
       {renderStats()}
     </div>
   ) : (
