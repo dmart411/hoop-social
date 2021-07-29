@@ -9,7 +9,7 @@ const statReducer = (
 ) => {
   switch (action.type) {
     case FETCH_STATS:
-      return { ...state, gameStats: action.payload };
+      return { ...state, gameStats: action.payload.data, meta: action.payload.meta };
     case FETCH_SEASON_AVERAGES:
       return { ...state, seasonAverages: action.payload};
     default:

@@ -53,7 +53,7 @@ export const fetchStats =
     });
     dispatch({
       type: FETCH_STATS,
-      payload: res.data.data,
+      payload: res.data,
     });
   };
 

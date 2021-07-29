@@ -13,7 +13,7 @@ const Results = ({ players, fetchPlayers }) => {
   return (
     <div className="ui container">
       <h3>Results</h3>
-      <div className="ui middle aligned celled list" style={{ width: "50%" }}>
+      <div className="ui middle aligned celled list">
         {players
           ? players.map((player) => {
               return (

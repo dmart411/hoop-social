@@ -7,15 +7,18 @@ import GameAverages from "./GameStats";
 const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
   useEffect(() => {
     const id = match.params.id;
-    if (!player) {
-      fetchPlayer(id);
-    }
+    fetchPlayer(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderProfile = () => {
     return (
-      <div className="ui container">
+      <div className="ui container" style={{ marginBottom: "50px"}}>
+        <img
+          className="ui small bordered left floated image"
+          src={`https://nba-players.herokuapp.com/players/${player.last_name}/${player.first_name}`}
+          alt={`${player.first_name} ${player.last_name}`}
+        />
         <div>{`Team: ${player.team.full_name}`}</div>
         <div>{player.position ? `Position: ${player.position}` : null}</div>
         <div>

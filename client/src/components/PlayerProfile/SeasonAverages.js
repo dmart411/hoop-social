@@ -98,7 +98,7 @@ const SeasonAverages = ({ id, fetchSeasonAverages, seasonAverages }) => {
         </div>
       </>
     ) : (
-      <div className="ui orange floating message">No stats for selected</div>
+      <div className="ui orange floating message">No stats for selected season</div>
     );
   };
 

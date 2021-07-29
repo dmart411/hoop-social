@@ -5,7 +5,7 @@ import { fetchStats, fetchTeams } from "../../actions";
 import Selector from "../Selector";
 import Checkbox from "../Checkbox";
 
-const GameStats = ({ id, fetchStats, fetchTeams, stats, teams }) => {
+const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   const [season, setSeason] = useState(2020);
   const [postseason, setPostseason] = useState(false);
   const [page, setPage] = useState(0);
@@ -78,6 +78,41 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams }) => {
     );
   };
 
+  const renderPaginationMenu = () => {
+    let choices = [];
+    let page = 1;
+    while (choices.length < meta.total_pages) {
+      choices.push(page++);
+    }
+
+    return (
+      <>
+        <div className="ui right floated pagination menu">
+          {choices.map((choice) => {
+            return (
+              <div
+                key={choice}
+                className={`${
+                  meta.current_page === choice ? "active" : null
+                } item`}
+                onClick={() => {
+                  if (meta.current_page !== choice) {
+                    fetchStats(id, season, postseason, choice);
+                  }
+                }}
+              >
+                {choice}
+              </div>
+            );
+          })}
+        </div>
+        <div className="ui left floated orange label">
+          {`Total games: ${meta.total_count}`}
+        </div>
+      </>
+    );
+  };
+
   return (
     <div>
       <div className="ui large header" style={{ marginRight: "20px" }}>
@@ -97,7 +132,6 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams }) => {
           </div>
         </div>
       </div>
-
       {stats.length > 0 && !_.isEmpty(teams) ? (
         renderTable()
       ) : (
@@ -105,6 +139,7 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams }) => {
           No stats fit search criteria.
         </div>
       )}
+      {meta && meta.total_pages !== 0 ? renderPaginationMenu() : null}
     </div>
   );
 };
@@ -112,6 +147,7 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams }) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     stats: state.stats.gameStats,
+    meta: state.stats.meta,
     teams: state.teams,
   };
 };
