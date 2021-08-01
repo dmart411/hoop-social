@@ -1,8 +1,8 @@
-import { FETCH_USER, UPDATE_USER_FAVORITE_PLAYERS } from "../actions/types";
+import { FETCH_AUTH, UPDATE_USER_FAVORITE_PLAYERS } from "../actions/types";
 
 const authReducer = (state = null, action) => {
   switch (action.type) {
-    case FETCH_USER:
+    case FETCH_AUTH:
       return action.payload || false;
     case UPDATE_USER_FAVORITE_PLAYERS:
       return action.payload;

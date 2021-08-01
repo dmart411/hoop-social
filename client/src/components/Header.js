@@ -28,9 +28,11 @@ const Header = ({ auth, fetchPlayers }) => {
       <>
         <Link
           className={`item ${
-            location.pathname === `/user-profile/${auth.googleId}}` ? "active" : null
+            location.pathname === `/user-profile/${auth.googleId}`
+              ? "active"
+              : null
           } orange`}
-          to={`/user-profile/${auth.googleId}}`}
+          to={`/user-profile/${auth.googleId}`}
         >
           Profile
         </Link>

@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchUser } from "../actions";
+import { fetchAuth } from "../actions";
 import Header from "./Header";
 import PlayerProfile from "./player-profile";
 import UserProfile from "./user-profile";
 import Home from "./Home";
 import Results from "./Results";
 
-function App({ fetchUser }) {
+function App({ fetchAuth }) {
   useEffect(() => {
-    fetchUser();
+    fetchAuth();
   });
   return (
     <Router>
@@ -25,4 +25,4 @@ function App({ fetchUser }) {
   );
 }
 
-export default connect(null, { fetchUser })(App);
+export default connect(null, { fetchAuth })(App);

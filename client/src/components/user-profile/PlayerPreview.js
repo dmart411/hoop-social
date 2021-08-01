@@ -5,15 +5,15 @@ import { updateUserFavoritePlayers } from "../../actions";
 
 const PlayerPreview = ({
   playerId,
+  auth,
   player,
-  favoritePlayers,
   updateUserFavoritePlayers,
 }) => {
   const onRemoveClick = () => {
-    const updatedFavorites = favoritePlayers.filter((player) => {
+    const updatedFavorites = auth.favoritePlayers.filter((player) => {
       return player !== playerId.toString();
     });
-    updateUserFavoritePlayers(updatedFavorites);
+    updateUserFavoritePlayers(auth.googleId, updatedFavorites);
   };
 
   const displayCard = () => {
@@ -45,10 +45,12 @@ const PlayerPreview = ({
             </div>
           </div>
         </div>
-        <div className="ui bottom attached button" onClick={onRemoveClick}>
-          <i className="minus icon"></i>
-          Remove From Favorites
-        </div>
+        {auth ? (
+          <div className="ui bottom attached button" onClick={onRemoveClick}>
+            <i className="minus icon"></i>
+            Remove From Favorites
+          </div>
+        ) : null}
       </div>
     );
   };
@@ -58,12 +60,12 @@ const PlayerPreview = ({
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    auth: state.auth,
     player: state.players
       .filter((player) => {
         return player.id.toString() === ownProps.playerId;
       })
       .pop(),
-    favoritePlayers: state.auth.favoritePlayers,
   };
 };
 

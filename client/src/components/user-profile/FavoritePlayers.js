@@ -1,26 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchPlayer } from "../../actions";
+import { fetchPlayer, fetchUser } from "../../actions";
 import PlayerPreview from "./PlayerPreview";
 
-const FavoritePlayers = ({ userId, favoritePlayers, players, fetchPlayer }) => {
+const FavoritePlayers = ({ userId, user, players, fetchPlayer, fetchUser }) => {
   useEffect(() => {
-    for (let playerId of favoritePlayers) {
-      if (players.indexOf(playerId) === -1) {
-        fetchPlayer(playerId);
+    if (!user) {
+      fetchUser(userId);
+    } else {
+      for (let playerId of user.favoritePlayers) {
+        if (players.indexOf(playerId) === -1) {
+          fetchPlayer(playerId);
+        }
       }
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="ui container">
       <div className="ui large header" style={{ marginRight: "20px" }}>
         Favorite Players
       </div>
-      {favoritePlayers.length > 0 ? (
+      {user && user.favoritePlayers.length > 0 ? (
         <div className="ui three stackable cards">
-          {favoritePlayers.map((player) => {
+          {user.favoritePlayers.map((player) => {
             return <PlayerPreview playerId={player} key={player} />;
           })}
         </div>
@@ -33,9 +37,15 @@ const FavoritePlayers = ({ userId, favoritePlayers, players, fetchPlayer }) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    favoritePlayers: state.auth.favoritePlayers,
+    user: state.users
+      .filter((user) => {
+        return user.googleId === ownProps.userId;
+      })
+      .pop(),
     players: state.players,
   };
 };
 
-export default connect(mapStateToProps, { fetchPlayer })(FavoritePlayers);
+export default connect(mapStateToProps, { fetchPlayer, fetchUser })(
+  FavoritePlayers
+);

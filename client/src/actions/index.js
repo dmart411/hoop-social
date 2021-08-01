@@ -2,8 +2,10 @@ import axios from "axios";
 import balldontlie from "../apis/balldontlie";
 import requests from "../apis/requests";
 import {
+  FETCH_AUTH,
   FETCH_PLAYERS,
   FETCH_USER,
+  FETCH_USERS,
   FETCH_PLAYER,
   FETCH_STATS,
   FETCH_SEASON_AVERAGES,
@@ -11,17 +13,32 @@ import {
   UPDATE_USER_FAVORITE_PLAYERS,
 } from "./types";
 
-export const fetchUser = () => async (dispatch) => {
-  const res = await axios.get("/api/current_user");
+export const fetchUsers = () => async (dispatch) => {
+  const res = await axios.get("/users");
+  dispatch({
+    type: FETCH_USERS,
+    payload: res.data,
+  });
+};
+
+export const fetchUser = (id) => async (dispatch) => {
+  const res = await axios.get(`/users/${id}`);
   dispatch({
     type: FETCH_USER,
     payload: res.data,
   });
 };
 
-export const updateUserFavoritePlayers = (players) => async (dispatch) => {
-  console.log(players);
-  const res = await axios.patch("/api/current_user", {
+export const fetchAuth = () => async (dispatch) => {
+  const res = await axios.get("/api/current_user");
+  dispatch({
+    type: FETCH_AUTH,
+    payload: res.data,
+  });
+};
+
+export const updateUserFavoritePlayers = (id, players) => async (dispatch) => {
+  const res = await axios.patch(`/users/${id}`, {
     favoritePlayers: players,
   });
   dispatch({

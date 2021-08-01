@@ -19,10 +19,13 @@ const FavoritePlayerButton = ({ id, updateUserFavoritePlayers, auth }) => {
       const updatedFavorites = auth.favoritePlayers.filter((player) => {
         return player !== id.toString();
       });
-      updateUserFavoritePlayers(updatedFavorites);
+      updateUserFavoritePlayers(auth.googleId, updatedFavorites);
       setFavorite(false);
     } else {
-      updateUserFavoritePlayers([...auth.favoritePlayers, id.toString()]);
+      updateUserFavoritePlayers(auth.googleId, [
+        ...auth.favoritePlayers,
+        id.toString(),
+      ]);
       setFavorite(true);
     }
   };
