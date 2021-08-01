@@ -1,19 +1,24 @@
 import { connect } from "react-redux";
+import FavoritePlayers from "./FavoritePlayers";
 
 const UserProfile = ({ auth }) => {
   const renderProfile = () => {
     return (
       <div>
-        <img className="ui avatar image" src={auth.photo} alt="avatar" />
-        <div>Name: {auth.name}</div>
-        <div>Email: {auth.email}</div>
+        <img
+          className="ui mini bordered left floated image"
+          src={auth.photo}
+          alt="avatar"
+        />
+        <h3 className="ui huge header">{auth.name}</h3>
+        <div className="ui divider" />
+        <FavoritePlayers />
       </div>
     );
   };
 
   return (
     <div className="ui container">
-      <h3>Profile</h3>
       {auth ? renderProfile() : "Not signed in"}
     </div>
   );

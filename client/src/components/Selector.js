@@ -14,7 +14,7 @@ const Selector = ({ options, onChange, label }) => {
         className="ui dropdown"
         onChange={handleChange}
         value={value}
-        style={{ width: "50%" }}
+        style={{ width: "100%" }}
       >
         {options.map((option, index) => {
           return (

@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchUser } from "../actions";
 import Header from "./Header";
-import PlayerProfile from "./PlayerProfile/PlayerProfile";
-import UserProfile from "./UserProfile";
+import PlayerProfile from "./player-profile";
+import UserProfile from "./user-profile";
 import Home from "./Home";
 import Results from "./Results";
 

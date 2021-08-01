@@ -8,12 +8,24 @@ import {
   FETCH_STATS,
   FETCH_SEASON_AVERAGES,
   FETCH_TEAMS,
+  UPDATE_USER_FAVORITE_PLAYERS,
 } from "./types";
 
 export const fetchUser = () => async (dispatch) => {
   const res = await axios.get("/api/current_user");
   dispatch({
     type: FETCH_USER,
+    payload: res.data,
+  });
+};
+
+export const updateUserFavoritePlayers = (players) => async (dispatch) => {
+  console.log(players);
+  const res = await axios.patch("/api/current_user", {
+    favoritePlayers: players,
+  });
+  dispatch({
+    type: UPDATE_USER_FAVORITE_PLAYERS,
     payload: res.data,
   });
 };

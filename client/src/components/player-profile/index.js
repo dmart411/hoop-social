@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchPlayer } from "../../actions";
 import SeasonAverages from "./SeasonAverages";
 import GameAverages from "./GameStats";
+import FavoritePlayerButton from "./FavoritePlayerButton";
 
 const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
   useEffect(() => {
@@ -13,7 +14,7 @@ const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
 
   const renderProfile = () => {
     return (
-      <div className="ui container" style={{ marginBottom: "50px"}}>
+      <div className="ui container" style={{ marginBottom: "50px" }}>
         <img
           className="ui small bordered left floated image"
           src={`https://nba-players.herokuapp.com/players/${player.last_name}/${player.first_name}`}
@@ -35,10 +36,10 @@ const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
 
   return (
     <div className="ui container">
+      <FavoritePlayerButton id={match.params.id} />
       <div className="ui huge header">
         {player ? `${player.first_name} ${player.last_name}` : null}
       </div>
-
       <div>{player ? renderProfile() : null}</div>
       <div className="ui divider"></div>
       <SeasonAverages id={match.params.id} />
