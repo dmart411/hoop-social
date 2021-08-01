@@ -5,7 +5,8 @@ const userSchema = new Schema({
   googleId: String,
   name: String,
   photo: String,
-  email: String
+  email: String,
+  favoritePlayers: [String],
 });
 
 mongoose.model("users", userSchema);

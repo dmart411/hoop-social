@@ -29,7 +29,7 @@ passport.use(
         if (existingUser) {
           done(null, existingUser);
         } else {
-          const newUser = await new User({ googleId: profile.id, name: profile.displayName, photo: profile.photos.pop().value, email: profile.emails.pop().value }).save();
+          const newUser = await new User({ googleId: profile.id, name: profile.displayName, photo: profile.photos.pop().value, email: profile.emails.pop().value, favoritePlayers: [] }).save();
           done(null, newUser);
         }
       } catch (err) {
