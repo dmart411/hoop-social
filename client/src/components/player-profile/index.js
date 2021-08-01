@@ -5,7 +5,7 @@ import SeasonAverages from "./SeasonAverages";
 import GameAverages from "./GameStats";
 import FavoritePlayerButton from "./FavoritePlayerButton";
 
-const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
+const PlayerProfile = ({ match, fetchPlayer, player, auth }) => {
   useEffect(() => {
     const id = match.params.id;
     fetchPlayer(id);
@@ -36,7 +36,7 @@ const PlayerProfile = ({ match, fetchPlayer, player, stats }) => {
 
   return (
     <div className="ui container">
-      <FavoritePlayerButton id={match.params.id} />
+      {auth ? <FavoritePlayerButton id={match.params.id} /> : null}
       <div className="ui huge header">
         {player ? `${player.first_name} ${player.last_name}` : null}
       </div>
@@ -56,7 +56,7 @@ const mapStateToProps = (state, ownProps) => {
         return player.id.toString() === ownProps.match.params.id;
       })
       .pop(),
-    stats: state.stats,
+    auth: state.auth,
   };
 };
 
