@@ -5,6 +5,7 @@ const path = require("path");
 const passport = require("passport");
 const keys = require("./config/keys");
 require("./models/User");
+require("./models/Post");
 require("./services/passport");
 
 mongoose.connect(keys.mongoURI, {
@@ -27,6 +28,7 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/userRoutes")(app);
+require("./routes/postRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
