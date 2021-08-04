@@ -11,6 +11,11 @@ import {
   FETCH_SEASON_AVERAGES,
   FETCH_TEAMS,
   UPDATE_USER_FAVORITE_PLAYERS,
+  CREATE_POST,
+  FETCH_POST,
+  FETCH_POSTS,
+  UPDATE_POST,
+  DELETE_POST,
 } from "./types";
 
 export const fetchUsers = () => async (dispatch) => {
@@ -104,5 +109,45 @@ export const fetchTeams = () => async (dispatch) => {
   dispatch({
     type: FETCH_TEAMS,
     payload: res.data.data,
+  });
+};
+
+export const createPost = (post) => async (dispatch) => {
+  const res = await axios.post("/posts", post);
+  dispatch({
+    type: CREATE_POST,
+    payload: res.data,
+  });
+};
+
+export const fetchPost = (id) => async (dispatch) => {
+  const res = await axios.get(`/posts/${id}`);
+  dispatch({
+    type: FETCH_POST,
+    payload: res.data,
+  });
+};
+
+export const fetchPosts = () => async (dispatch) => {
+  const res = await axios.get(`/posts`);
+  dispatch({
+    type: FETCH_POSTS,
+    payload: res.data,
+  });
+};
+
+export const updatePost = (id, updates) => async (dispatch) => {
+  const res = await axios.patch(`/posts/${id}`, updates);
+  dispatch({
+    type: UPDATE_POST,
+    payload: res.data,
+  });
+};
+
+export const deletePost = (id) => async (dispatch) => {
+  await axios.delete(`/posts/${id}`);
+  dispatch({
+    type: DELETE_POST,
+    payload: id,
   });
 };

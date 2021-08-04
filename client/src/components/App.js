@@ -5,7 +5,7 @@ import { fetchAuth } from "../actions";
 import Header from "./Header";
 import PlayerProfile from "./player-profile";
 import UserProfile from "./user-profile";
-import Home from "./Home";
+import Home from "./home";
 import Results from "./Results";
 
 function App({ fetchAuth }) {

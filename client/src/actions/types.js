@@ -1,4 +1,4 @@
-export const FETCH_AUTH = "FETCH_AUTH"
+export const FETCH_AUTH = "FETCH_AUTH";
 export const FETCH_USER = "FETCH_USER";
 export const FETCH_USERS = "FETCH_USERS";
 export const FETCH_PLAYERS = "FETCH_PLAYERS";
@@ -7,3 +7,9 @@ export const FETCH_STATS = "FETCH_STATS";
 export const FETCH_SEASON_AVERAGES = "FETCH_SEASON_AVERAGES";
 export const FETCH_TEAMS = "FETCH_TEAMS";
 export const UPDATE_USER_FAVORITE_PLAYERS = "UPDATE_USER_FAVORITE_PLAYERS";
+export const FETCH_POST = "FETCH_POST";
+export const FETCH_POSTS = "FETCH_POSTS";
+export const CREATE_POST = "CREATE_POST";
+export const DELETE_POST = "DELETE_POST";
+export const UPDATE_POST = "UPDATE_POST";
+export const ADD_COMMENT = "ADD_COMMENT";
