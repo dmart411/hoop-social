@@ -13,7 +13,7 @@ function App({ fetchAuth }) {
     fetchAuth();
   });
   return (
-    <Router >
+    <Router>
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -21,6 +21,7 @@ function App({ fetchAuth }) {
         <Route path="/player-profile/:id" component={PlayerProfile} />
         <Route path="/results" component={Results} />
       </Switch>
+      <div className="ui basic segment" style={{ marginTop: "50px" }} />
     </Router>
   );
 }

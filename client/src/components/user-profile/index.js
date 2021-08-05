@@ -35,7 +35,7 @@ const UserProfile = ({ user, auth, match, fetchUser }) => {
         />
         <h3 className="ui huge header">{user.name}</h3>
         <div className="ui divider" />
-        <div className="ui two item menu">
+        <div className="ui two item menu" style={{ marginBottom: "50px" }}>
           <div
             className={`${
               activeItem === FAVORITE_PLAYER ? "active" : null
