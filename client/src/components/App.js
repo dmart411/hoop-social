@@ -13,7 +13,7 @@ function App({ fetchAuth }) {
     fetchAuth();
   });
   return (
-    <Router>
+    <Router >
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />

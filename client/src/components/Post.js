@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { updatePost, deletePost, fetchPosts } from "../../actions";
+import { updatePost, deletePost, fetchPosts } from "../actions";
 import Comment from "./Comment";
 
 const Post = ({
@@ -16,6 +16,7 @@ const Post = ({
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [hovering, setHovering] = useState(false);
+  const location = useLocation();
 
   const user = users
     ? users
@@ -25,10 +26,25 @@ const Post = ({
         .pop()
     : null;
 
+  const getTimeElapsed = () => {
+    const time = Math.floor((new Date() - new Date(post.updated)) / 1000 / 60);
+    if (time === 0) {
+      return "Just now";
+    } else if (time < 60) {
+      return time === 1 ? `${time} minute ago` : `${time} minutes ago`;
+    } else if (time < 24 * 60) {
+      const hours = Math.floor(time / 60);
+      return hours === 1 ? `${hours} hour ago` : `${hours} hours ago`;
+    } else {
+      const days = Math.floor(time / 60 / 24);
+      return days === 1 ? `${days} day ago` : `${days} days ago`;
+    }
+  };
+
   const displayAdmin = () => {
     return auth && auth._id === post.postedBy ? (
       <Link
-        to="/"
+        to={location.pathname}
         className="active reply"
         onClick={() => {
           deletePost(postId);
@@ -81,7 +97,7 @@ const Post = ({
     ) : null;
   };
 
-  return (
+  return user && post ? (
     <>
       <div
         className="comment"
@@ -100,13 +116,13 @@ const Post = ({
             {user.name}
           </Link>
           <div className="metadata">
-            <span className="date">{`${post.updated}`}</span>
+            <span className="date">{getTimeElapsed()}</span>
           </div>
           <div className="text">{post.text}</div>
           {auth && hovering ? (
             <div className="actions">
               <Link
-                to="/"
+                to={location.pathname}
                 className="active reply"
                 onClick={() => {
                   setShowReplyForm(!showReplyForm);
@@ -119,14 +135,16 @@ const Post = ({
           ) : null}
           <div className="comments">
             {post.comments.map((comment) => {
-              return <Comment comment={comment} key={comment._id} />;
+              return (
+                <Comment comment={comment} key={comment._id} postId={postId} />
+              );
             })}
             {displayReplyForm()}
           </div>
         </div>
       </div>
     </>
-  );
+  ) : null;
 };
 
 const mapStateToProps = (state, ownProps) => {

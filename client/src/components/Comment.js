@@ -1,13 +1,22 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { updatePost } from "../actions";
 
-const Comment = ({ comment, user, auth }) => {
+const Comment = ({ comment, user, auth, updatePost, postId, post }) => {
+  const location = useLocation();
   const [hovering, setHovering] = useState(true);
+
+  const onDeleteComment = () => {
+    const comments = post.comments.filter((com) => {
+      return com._id !== comment._id;
+    });
+    updatePost(postId, { comments });
+  };
 
   const displayAdmin = () => {
     return auth && auth._id === comment.postedBy ? (
-      <Link to="/" className="active reply">
+      <Link to={location.pathname} className="active reply" onClick={onDeleteComment}>
         Delete
       </Link>
     ) : null;
@@ -45,7 +54,12 @@ const mapStateToProps = (state, ownProps) => {
       })
       .pop(),
     auth: state.auth,
+    post: state.posts
+      .filter((post) => {
+        return post._id === ownProps.postId;
+      })
+      .pop(),
   };
 };
 
-export default connect(mapStateToProps)(Comment);
+export default connect(mapStateToProps, { updatePost })(Comment);

@@ -1,10 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
-import { fetchUsers, fetchPosts, createPost } from "../../actions";
-import Post from "./Post";
+import {
+  fetchUsers,
+  fetchPosts,
+  createPost,
+  fetchPlayers,
+} from "../../actions";
+import Post from "../Post";
+import Search from "../Search";
 
-const Home = ({ auth, users, posts, fetchUsers, fetchPosts, createPost }) => {
+const Home = ({
+  auth,
+  posts,
+  fetchUsers,
+  fetchPosts,
+  createPost,
+  fetchPlayers,
+}) => {
   useEffect(() => {
     fetchUsers();
     fetchPosts();
@@ -71,28 +84,54 @@ const Home = ({ auth, users, posts, fetchUsers, fetchPosts, createPost }) => {
     ) : null;
   };
 
+  const onSearch = (text) => {
+    fetchPlayers(text);
+  };
+
   return (
-    <div className="ui container">
-      {createPostButton()}
-      <h1>Home</h1>
-      <div className="ui comments">
-        {displayCreatePost()}
-        {posts.map((post) => {
-          return <Post postId={post._id} key={post._id} />;
-        })}
+    <>
+      <div
+        className="ui vertical masthead center aligned segment"
+        style={{ marginBottom: "30px" }}
+      >
+        <div
+          className="ui text container"
+          style={{ marginTop: "70px", marginBottom: "30px" }}
+        >
+          <h1 className="ui header">Hoops Social</h1>
+          <h4 className="ui sub header">
+            Search for an NBA player and see their stats!
+          </h4>
+        </div>
+        <Search onSearch={onSearch} redirect="/results" />
       </div>
-    </div>
+      <div className="ui container">
+        {createPostButton()}
+        <h1>Discussion</h1>
+        <div className="ui comments">
+          {displayCreatePost()}
+          {posts
+            .slice(0)
+            .reverse()
+            .map((post) => {
+              return <Post postId={post._id} key={post._id} />;
+            })}
+        </div>
+      </div>
+    </>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    users: state.users,
     posts: state.posts,
   };
 };
 
-export default connect(mapStateToProps, { fetchUsers, fetchPosts, createPost })(
-  Home
-);
+export default connect(mapStateToProps, {
+  fetchUsers,
+  fetchPosts,
+  createPost,
+  fetchPlayers,
+})(Home);

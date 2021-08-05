@@ -57,9 +57,11 @@ const Header = ({ auth, fetchPlayers }) => {
         </Link>
         {auth ? renderUserButtons() : null}
         <div className="right menu">
-          <div className="item">
-            <Search onSearch={onSearch} redirect="/results" />
-          </div>
+          {location.pathname !== "/" ? (
+            <div className="item">
+              <Search onSearch={onSearch} redirect="/results" />
+            </div>
+          ) : null}
           {renderAuthButton()}
         </div>
       </div>

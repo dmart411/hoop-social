@@ -21,6 +21,7 @@ const postReducer = (state = [], action) => {
     case UPDATE_POST:
       return state.map((post) => {
         if (post._id === action.payload._id) {
+          // Copy the object before mutating
           return Object.assign({}, post, {
             comments: action.payload.comments,
           });

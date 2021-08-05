@@ -19,9 +19,6 @@ const FavoritePlayers = ({ userId, user, players, fetchPlayer, fetchUser }) => {
 
   return (
     <div className="ui container">
-      <div className="ui large header" style={{ marginRight: "20px" }}>
-        Favorite Players
-      </div>
       {user && user.favoritePlayers.length > 0 ? (
         <div className="ui three stackable cards">
           {user.favoritePlayers.map((player) => {
