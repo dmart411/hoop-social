@@ -18,7 +18,7 @@ const UserProfile = ({ user, auth, match, fetchUser }) => {
   const showActiveItem = () => {
     switch (activeItem) {
       case FAVORITE_PLAYER:
-        return <FavoritePlayers userId={user.googleId} />;
+        return <FavoritePlayers userId={user._id} />;
       case POSTS:
         return <UserPosts userId={user._id} />;
       default:

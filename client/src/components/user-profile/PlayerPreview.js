@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { updateUserFavoritePlayers } from "../../actions";
 
 const PlayerPreview = ({
+  userId,
   playerId,
   auth,
   player,
@@ -45,7 +46,7 @@ const PlayerPreview = ({
             </div>
           </div>
         </div>
-        {auth ? (
+        {auth._id === userId ? (
           <div className="ui bottom attached button" onClick={onRemoveClick}>
             <i className="minus icon"></i>
             Remove From Favorites

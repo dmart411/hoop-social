@@ -22,7 +22,9 @@ const FavoritePlayers = ({ userId, user, players, fetchPlayer, fetchUser }) => {
       {user && user.favoritePlayers.length > 0 ? (
         <div className="ui three stackable cards">
           {user.favoritePlayers.map((player) => {
-            return <PlayerPreview playerId={player} key={player} />;
+            return (
+              <PlayerPreview playerId={player} key={player} userId={userId} />
+            );
           })}
         </div>
       ) : (
@@ -36,7 +38,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.users
       .filter((user) => {
-        return user.googleId === ownProps.userId;
+        return user._id === ownProps.userId;
       })
       .pop(),
     players: state.players,
