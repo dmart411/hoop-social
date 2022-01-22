@@ -6,7 +6,10 @@ import Selector from "../Selector";
 import Checkbox from "../Checkbox";
 
 const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
-  const [season, setSeason] = useState(2020);
+  const date = new Date();
+  const baseSeason = date.getMonth() < 8 ? date.getFullYear() - 1 : date.getFullYear();
+
+  const [season, setSeason] = useState(baseSeason);
   const [postseason, setPostseason] = useState(false);
   const [page, setPage] = useState(0);
 
@@ -17,7 +20,6 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   }, []);
 
   const options = [];
-  const baseSeason = 2020;
   for (var i = 0; i < 40; i++) {
     options.push({
       text: baseSeason - i + "-" + (baseSeason - i + 1),

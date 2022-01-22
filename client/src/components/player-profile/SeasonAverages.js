@@ -4,7 +4,9 @@ import { fetchSeasonAverages } from "../../actions";
 import Selector from "../Selector";
 
 const SeasonAverages = ({ id, fetchSeasonAverages, seasonAverages }) => {
-  const [season, setSeason] = useState(2020);
+  const date = new Date();
+  const baseSeason = date.getMonth() < 8 ? date.getFullYear() - 1 : date.getFullYear();
+  const [season, setSeason] = useState(baseSeason);
 
   useEffect(() => {
     fetchSeasonAverages(id, season);
@@ -12,7 +14,6 @@ const SeasonAverages = ({ id, fetchSeasonAverages, seasonAverages }) => {
   }, []);
 
   const options = [];
-  const baseSeason = 2020;
   for (var i = 0; i < 40; i++) {
     options.push({
       text: baseSeason - i + "-" + (baseSeason - i + 1),
