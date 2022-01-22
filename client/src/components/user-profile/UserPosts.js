@@ -26,8 +26,6 @@ const UserPosts = ({ userId, fetchPosts, posts }) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     posts: state.posts.filter((post) => {
-      console.log(post.postedBy);
-      console.log(ownProps.userId);
       return post.postedBy === ownProps.userId;
     }),
   };
