@@ -5,7 +5,7 @@ import { Search } from "semantic-ui-react";
 import _ from "lodash";
 import { searchPlayers } from "../actions";
 
-const SearchAutoComplete = ({ search, searchPlayers }) => {
+const SearchAutoComplete = ({ search, searchPlayers, size }) => {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
@@ -31,7 +31,7 @@ const SearchAutoComplete = ({ search, searchPlayers }) => {
         });
       });
       setLoading(false);
-      setResults(source);
+      setResults(source.slice(0, 5));
     }, 300);
   };
 
@@ -45,6 +45,7 @@ const SearchAutoComplete = ({ search, searchPlayers }) => {
       })}
       results={results}
       value={value}
+      size={size} 
     />
   );
 };

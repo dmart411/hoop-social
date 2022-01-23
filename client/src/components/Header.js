@@ -40,7 +40,7 @@ const Header = ({ auth, fetchPlayers }) => {
   };
 
   return (
-    <div className="ui stackable fluid inverted menu">
+    <div className="ui stackable fluid inverted menu" style={{ minHeight: "60px" }}>
       <div className="ui container">
         <Link
           to="/"
@@ -50,13 +50,22 @@ const Header = ({ auth, fetchPlayers }) => {
         >
           Home
         </Link>
+        <Link
+          to="/discussion"
+          className={`item ${
+            location.pathname === "/discussion" ? "active" : null
+          } orange`}
+        >
+          Discussion
+        </Link>
         {auth ? renderUserButtons() : null}
         <div className="right menu">
-          {location.pathname !== "/" ? (
-            <div className="item">
-              <Search />
-            </div>
-          ) : null}
+          <div
+            className="item"
+            style={location.pathname === "/" ? { display: "none" } : {}}
+          >
+            <Search size="mini"/>
+          </div>
           {renderAuthButton()}
         </div>
       </div>

@@ -6,7 +6,7 @@ import Header from "./Header";
 import PlayerProfile from "./player-profile";
 import UserProfile from "./user-profile";
 import Home from "./home";
-import Results from "./Results";
+import Discussion from "./discussion";
 
 function App({ fetchAuth }) {
   useEffect(() => {
@@ -17,9 +17,9 @@ function App({ fetchAuth }) {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/discussion" component={Discussion} />
         <Route path="/user-profile/:id" component={UserProfile} />
         <Route path="/player-profile/:id" component={PlayerProfile} />
-        <Route path="/results" component={Results} />
       </Switch>
       <div className="ui divider" />
       <div className="ui text container">
