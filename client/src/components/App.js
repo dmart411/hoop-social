@@ -21,12 +21,6 @@ function App({ fetchAuth }) {
         <Route path="/user-profile/:id" component={UserProfile} />
         <Route path="/player-profile/:id" component={PlayerProfile} />
       </Switch>
-      <div className="ui divider" />
-      <div className="ui text container">
-        <a href="https://github.com/dmart411/hoop-social">
-          Check out the code!
-        </a>
-      </div>
     </Router>
   );
 }

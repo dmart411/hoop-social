@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "semantic-ui-react";
 import Search from "../Search";
 
@@ -16,7 +15,7 @@ const Home = () => {
         >
           <h1 className="ui header">Hoops Social</h1>
           <h4 className="ui sub header">
-            Search for an NBA player and see their stats!
+            Search for an NBA player and see their stats
           </h4>
         </div>
         <Grid>
