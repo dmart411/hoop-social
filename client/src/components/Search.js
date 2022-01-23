@@ -1,30 +1,58 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
+import { connect } from "react-redux";
+import { Search } from "semantic-ui-react";
+import _ from "lodash";
+import { searchPlayers } from "../actions";
 
-const Search = ({ onSearch, redirect }) => {
-  const [text, setText] = useState("");
-  let history = useHistory();
+const SearchAutoComplete = ({ search, searchPlayers }) => {
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState([]);
+  const [value, setValue] = useState("");
+  const history = useHistory();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    onSearch(text);
-    setText("");
-    history.push(redirect);
+  const handleResultSelect = (e, { result }) => {
+    setValue(result.title);
+    history.push(`/player-profile/${result.id}`);
+  };
+
+  const handleSearchChange = (e, { value }) => {
+    setLoading(true);
+    searchPlayers(value);
+    setValue(value);
+
+    setTimeout(() => {
+      const source = [];
+      search.forEach((player) => {
+        source.push({
+          title: `${player.first_name} ${player.last_name}`,
+          description: player.team.full_name,
+          id: player.id,
+        });
+      });
+      setLoading(false);
+      setResults(source);
+    }, 300);
   };
 
   return (
-    <form className="ui icon input" onSubmit={onSubmit}>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-      />
-      <i className="search link icon" />
-    </form>
+    <Search
+      fluid
+      loading={loading}
+      onResultSelect={handleResultSelect}
+      onSearchChange={_.debounce(handleSearchChange, 500, {
+        leading: true,
+      })}
+      results={results}
+      value={value}
+    />
   );
 };
 
-export default Search;
+const mapStateToProps = ({ search }) => {
+  return {
+    search,
+  };
+};
+
+export default connect(mapStateToProps, { searchPlayers })(SearchAutoComplete);

@@ -84,9 +84,6 @@ const Home = ({
     ) : null;
   };
 
-  const onSearch = (text) => {
-    fetchPlayers(text);
-  };
 
   return (
     <>
@@ -103,7 +100,7 @@ const Home = ({
             Search for an NBA player and see their stats!
           </h4>
         </div>
-        <Search onSearch={onSearch} redirect="/results" />
+        <Search />
       </div>
       <div className="ui container">
         {createPostButton()}

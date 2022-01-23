@@ -10,8 +10,7 @@ const SeasonAverages = ({ id, fetchSeasonAverages, seasonAverages }) => {
 
   useEffect(() => {
     fetchSeasonAverages(id, season);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchSeasonAverages, id, season]);
 
   const options = [];
   for (var i = 0; i < 40; i++) {

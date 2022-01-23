@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { fetchPlayers } from "../actions";
-
 import Search from "./Search";
 
 const Header = ({ auth, fetchPlayers }) => {
@@ -40,10 +39,6 @@ const Header = ({ auth, fetchPlayers }) => {
     );
   };
 
-  const onSearch = (text) => {
-    fetchPlayers(text);
-  };
-
   return (
     <div className="ui stackable fluid inverted menu">
       <div className="ui container">
@@ -59,7 +54,7 @@ const Header = ({ auth, fetchPlayers }) => {
         <div className="right menu">
           {location.pathname !== "/" ? (
             <div className="item">
-              <Search onSearch={onSearch} redirect="/results" />
+              <Search />
             </div>
           ) : null}
           {renderAuthButton()}

@@ -13,3 +13,4 @@ export const CREATE_POST = "CREATE_POST";
 export const DELETE_POST = "DELETE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const SEARCH_PLAYERS = "SEARCH_PLAYERS";

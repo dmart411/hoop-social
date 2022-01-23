@@ -9,8 +9,7 @@ const PlayerProfile = ({ match, fetchPlayer, player, auth }) => {
   useEffect(() => {
     const id = match.params.id;
     fetchPlayer(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchPlayer, match]);
 
   const renderProfile = () => {
     return (

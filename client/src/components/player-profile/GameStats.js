@@ -7,7 +7,8 @@ import Checkbox from "../Checkbox";
 
 const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   const date = new Date();
-  const baseSeason = date.getMonth() < 8 ? date.getFullYear() - 1 : date.getFullYear();
+  const baseSeason =
+    date.getMonth() < 8 ? date.getFullYear() - 1 : date.getFullYear();
 
   const [season, setSeason] = useState(baseSeason);
   const [postseason, setPostseason] = useState(false);
@@ -16,8 +17,7 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   useEffect(() => {
     fetchStats(id, season, postseason, page);
     fetchTeams();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id, season, postseason, page, fetchStats, fetchTeams]);
 
   const options = [];
   for (var i = 0; i < 40; i++) {

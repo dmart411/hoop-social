@@ -5,6 +5,7 @@ import statReducer from "./statReducer";
 import teamReducer from "./teamReducer";
 import userReducer from "./userReducer";
 import postReducer from "./postReducer";
+import searchReducer from "./searchReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   teams: teamReducer,
   users: userReducer,
   posts: postReducer,
+  search: searchReducer,
 });

@@ -16,6 +16,7 @@ import {
   FETCH_POSTS,
   UPDATE_POST,
   DELETE_POST,
+  SEARCH_PLAYERS,
 } from "./types";
 
 export const fetchUsers = () => async (dispatch) => {
@@ -149,5 +150,18 @@ export const deletePost = (id) => async (dispatch) => {
   dispatch({
     type: DELETE_POST,
     payload: id,
+  });
+};
+
+export const searchPlayers = (text = "") =>
+async (dispatch) => {
+  const res = await balldontlie.get(requests.getPlayers, {
+    params: {
+      search: text,
+    },
+  });
+  dispatch({
+    type: SEARCH_PLAYERS,
+    payload: res.data.data,
   });
 };
