@@ -13,10 +13,10 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   const [season, setSeason] = useState(baseSeason);
   const [postseason, setPostseason] = useState(false);
   const [page, setPage] = useState(0);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: true });
+  const [sortConfig, setSortConfig] = useState({ key: "date", direction: false });
 
   useEffect(() => {
-    setSortConfig({ key: null, direction: true });
+    setSortConfig({ key: "date", direction: false });
     fetchStats(id, season, postseason, page);
     fetchTeams();
   }, [id, season, postseason, page, fetchStats, fetchTeams, baseSeason]);
