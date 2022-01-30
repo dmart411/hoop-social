@@ -13,11 +13,13 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   const [season, setSeason] = useState(baseSeason);
   const [postseason, setPostseason] = useState(false);
   const [page, setPage] = useState(0);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: true });
 
   useEffect(() => {
+    setSortConfig({ key: null, direction: true });
     fetchStats(id, season, postseason, page);
     fetchTeams();
-  }, [id, season, postseason, page, fetchStats, fetchTeams]);
+  }, [id, season, postseason, page, fetchStats, fetchTeams, baseSeason]);
 
   const options = [];
   for (var i = 0; i < 40; i++) {
@@ -26,6 +28,14 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
       value: baseSeason - i,
     });
   }
+
+  const requestSort = (key) => {
+    let direction = true;
+    if (sortConfig.key === key && sortConfig.direction) {
+      direction = false;
+    }
+    setSortConfig({ key, direction });
+  };
 
   const onSeasonChange = (season) => {
     fetchStats(id, season, postseason, 0);
@@ -40,24 +50,69 @@ const GameStats = ({ id, fetchStats, fetchTeams, stats, teams, meta }) => {
   };
 
   const renderTable = () => {
+    const renderIcon = (key) => {
+      if (sortConfig.key === key) {
+        return sortConfig.direction ? (
+          <i className="caret up icon"></i>
+        ) : (
+          <i className="caret down icon"></i>
+        );
+      }
+    };
+
+    let sortedStats = [...stats];
+    if (sortConfig.key !== null) {
+      sortedStats.sort((a, b) => {
+        let valueA =
+          sortConfig.key === "date" ? a["game"].date : a[sortConfig.key];
+        let valueB =
+          sortConfig.key === "date" ? b["game"].date : b[sortConfig.key];
+        if (valueA < valueB) {
+          return sortConfig.direction ? -1 : 1;
+        }
+        if (valueA > valueB) {
+          return sortConfig.direction ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
     return (
       <table className="ui small compact celled inverted ten column table">
         <thead>
           <tr>
             <th>Game</th>
-            <th>Date</th>
-            <th>Points</th>
-            <th>Rebounds</th>
-            <th>Assits</th>
-            <th>Steals</th>
-            <th>Blocks</th>
-            <th>FG%</th>
-            <th>3P%</th>
-            <th>FT%</th>
+            <th onClick={() => requestSort("date")}>
+              Date {renderIcon("date")}
+            </th>
+            <th onClick={() => requestSort("pts")}>
+              Points {renderIcon("pts")}
+            </th>
+            <th onClick={() => requestSort("reb")}>
+              Rebounds {renderIcon("reb")}
+            </th>
+            <th onClick={() => requestSort("ast")}>
+              Assits {renderIcon("ast")}
+            </th>
+            <th onClick={() => requestSort("stl")}>
+              Steals {renderIcon("stl")}
+            </th>
+            <th onClick={() => requestSort("blk")}>
+              Blocks {renderIcon("blk")}
+            </th>
+            <th onClick={() => requestSort("fg_pct")}>
+              FG% {renderIcon("fg_pct")}
+            </th>
+            <th onClick={() => requestSort("fg3_pct")}>
+              3P% {renderIcon("fg3_pct")}
+            </th>
+            <th onClick={() => requestSort("ft_pct")}>
+              FT% {renderIcon("ft_pct")}
+            </th>
           </tr>
         </thead>
         <tbody>
-          {stats.map((stat) => {
+          {sortedStats.map((stat) => {
             return (
               <tr key={stat.id}>
                 <td>{`${teams[stat.game.home_team_id].abbreviation} vs ${
